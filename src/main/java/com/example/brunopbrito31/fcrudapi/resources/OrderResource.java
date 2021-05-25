@@ -1,7 +1,7 @@
 package com.example.brunopbrito31.fcrudapi.resources;
 
-import com.example.brunopbrito31.fcrudapi.model.entities.User;
-import com.example.brunopbrito31.fcrudapi.model.services.UserService;
+import com.example.brunopbrito31.fcrudapi.model.entities.Order;
+import com.example.brunopbrito31.fcrudapi.model.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,22 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
-public class UserResource {
+@RequestMapping("/orders")
+public class OrderResource {
 
     @Autowired
-    private UserService userService;
+    private OrderService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
-        List<User> list = userService.findAll();
+    public ResponseEntity<List<Order>> findAll(){
+        List<Order> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        User user = userService.findById(id);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<Order> findById(@PathVariable Long id){
+        return ResponseEntity.ok().body(service.findById(id));
     }
-
 }
