@@ -12,7 +12,7 @@ public class User implements Serializable {
     private static final Long serialVersionUID=1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // para que as chaves primárias sejam geradas automaticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;

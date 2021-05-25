@@ -1,5 +1,6 @@
 package com.example.brunopbrito31.fcrudapi.resources;
 
+import com.example.brunopbrito31.fcrudapi.model.entities.Category;
 import com.example.brunopbrito31.fcrudapi.model.entities.Order;
 import com.example.brunopbrito31.fcrudapi.model.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/orders")
@@ -26,6 +28,11 @@ public class OrderResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<Order> findById(@PathVariable Long id){
-        return ResponseEntity.ok().body(service.findById(id));
+        Optional<Order> opt = service.findById(id);
+        if(opt.isPresent()){
+            return ResponseEntity.ok().body(opt.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -1,11 +1,27 @@
 package com.example.brunopbrito31.fcrudapi.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-public class Category {
+@Entity
+@Table(name = "tb_category")
+public class Category implements Serializable {
 
+    private static final Long serialVersionUID=1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 
     public Category() {
     }
@@ -29,6 +45,10 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
     }
 
     @Override
