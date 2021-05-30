@@ -1,12 +1,13 @@
 package com.example.brunopbrito31.fcrudapi.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name= "tb_order")
@@ -19,18 +20,25 @@ public class Order implements Serializable {
     private Long id;
     private Instant moment;
 
+    private OrderStatus orderStatus;
 
-    @JsonIgnore
+
+
+    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
+    @OneToMany(mappedBy= "id.order")
+    private Set<OrderItem> items = new HashSet<>();
+
     public Order() {
     }
 
-    public Order(Long id, Instant moment, User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
+        this.orderStatus=orderStatus;
         this.client = client;
     }
 
@@ -52,6 +60,14 @@ public class Order implements Serializable {
 
     public User getClient() {
         return client;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     @Override
